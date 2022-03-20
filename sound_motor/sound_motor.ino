@@ -1,4 +1,5 @@
 #include <CheapStepper.h>
+
 int sensorPin = A0;  
 int sensorValue = 0; 
 
@@ -28,6 +29,7 @@ void setup() {
 }
 
 void loop() {
+  
   sensorValue = analogRead(sensorPin);
 
   if (sensorValue <= 100) 
