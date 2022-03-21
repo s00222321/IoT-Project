@@ -13,16 +13,16 @@ void setup() {
   pinMode(sensorPin, INPUT);
   // let's run the stepper at 12rpm (if using 5V power) - the default is ~16 rpm
 
-  stepper.setRpm(12); // CHANGED RPM
+  stepper.setRpm(16); // CHANGED RPM
   
-  Serial.begin(0); // CHANGED SPEED
+  Serial.begin(9600); // CHANGED SPEED
   Serial.print("stepper RPM: "); Serial.print(stepper.getRpm());
   Serial.println();
 
   Serial.print("stepper delay (micros): "); Serial.print(stepper.getDelay());
   Serial.println(); Serial.println();
 
-  stepper.newMoveTo(moveClockwise, 2048);
+  stepper.newMoveTo(moveClockwise, 4096);
 
   moveStartTime = millis();
   
@@ -31,11 +31,25 @@ void setup() {
 void loop() {
   
   sensorValue = analogRead(sensorPin);
+  Serial.print("sensor = ");
+  Serial.print(sensorValue);
+  Serial.println();
 
-  if (sensorValue <= 100) 
+  if (sensorValue >= 700) 
   {
+    stepper.setRpm(16);
     stepper.run();
-  } 
+  }
+  else if (sensorValue >= 500)
+  {
+    stepper.setRpm(10);
+    stepper.run();
+  }
+  else if (sensorValue >= 300)
+  {
+    stepper.setRpm(5);
+    stepper.run();
+  }
   else 
   {
     stepper.stop();
@@ -45,7 +59,7 @@ void loop() {
 
   
   if (stepsLeft == 0){
-    
+    /*
     Serial.print("stepper position: "); Serial.print(stepper.getStep());
     Serial.println();
 
@@ -54,11 +68,12 @@ void loop() {
     Serial.println(); Serial.println();
     
     // let's start a new move in the reverse direction
-    
+    */
     //moveClockwise = !moveClockwise; // reverse direction
     stepper.newMoveDegrees (moveClockwise, 360); // move 180 degrees from current position CHANGED DEGREES
     moveStartTime = millis(); // reset move start time
 
   }
+  
 
 }
