@@ -1,7 +1,13 @@
 #include <CheapStepper.h>
 
+#include <Wire.h>
+#include "rgb_lcd.h"
+
+rgb_lcd lcd;
+
 int sensorPin = A0;  
-int sensorValue = 0; 
+int sensorValue = 0;
+int sensorPrintValue = 0; 
 
 CheapStepper stepper (8,9,10,11);  
 
@@ -12,7 +18,9 @@ unsigned long moveStartTime = 0;
 void setup() {
   pinMode(sensorPin, INPUT);
   // let's run the stepper at 12rpm (if using 5V power) - the default is ~16 rpm
-
+  
+  lcd.begin(16, 2);
+  
   stepper.setRpm(16); // CHANGED RPM
   
   Serial.begin(9600); // CHANGED SPEED
@@ -31,25 +39,56 @@ void setup() {
 void loop() {
   
   sensorValue = analogRead(sensorPin);
+  sensorPrintValue = sensorValue / 4.3;
   Serial.print("sensor = ");
   Serial.print(sensorValue);
   Serial.println();
 
+if (sensorValue > 0)
+{
+
+  
   if (sensorValue >= 700) 
   {
     stepper.setRpm(16);
     stepper.run();
+    lcd.setRGB(255, 0, 0);
+    lcd.print("Heartrate: ");
+    lcd.print(sensorPrintValue);
+    delay(500);
+    lcd.clear();
   }
-  else if (sensorValue >= 500)
+  else if (sensorValue >= 500 && sensorValue < 700)
   {
-    stepper.setRpm(10);
     stepper.run();
+    stepper.setRpm(10);
+    lcd.setRGB(0, 255, 0);
+    lcd.print("Heartrate: ");
+    lcd.print(sensorPrintValue);
+    delay(500);
+    lcd.clear();
   }
-  else if (sensorValue >= 300)
+  else if (sensorValue >= 300 && sensorValue < 500)
   {
     stepper.setRpm(5);
     stepper.run();
+    lcd.setRGB(0, 0, 255);
+    lcd.print("Heartrate: ");
+    lcd.print(sensorPrintValue);
+    delay(500);
+    lcd.clear();
   }
+  else
+  {
+    stepper.setRpm(1);
+    stepper.run();
+    lcd.setRGB(0, 200, 200);
+    lcd.print("Heartrate: ");
+    lcd.print(sensorPrintValue);
+    delay(500);
+    lcd.clear();
+  }
+}
   else 
   {
     stepper.stop();
