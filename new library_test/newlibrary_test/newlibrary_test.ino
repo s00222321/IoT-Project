@@ -41,7 +41,7 @@ if (sensorValue >= 700)
     lcd.setRGB(255, 0, 0);
     lcd.print("Heartrate: ");
     lcd.print(sensorPrintValue);
-    delay(500);
+    //delay(500);
     lcd.clear();
   }
   else if (sensorValue >= 500 && sensorValue < 700)
@@ -51,7 +51,7 @@ if (sensorValue >= 700)
     lcd.setRGB(0, 255, 0);
     lcd.print("Heartrate: ");
     lcd.print(sensorPrintValue);
-    delay(500);
+    //delay(500);
     lcd.clear();
   }
   else if (sensorValue >= 300 && sensorValue < 500)
@@ -61,7 +61,7 @@ if (sensorValue >= 700)
     lcd.setRGB(0, 0, 255);
     lcd.print("Heartrate: ");
     lcd.print(sensorPrintValue);
-    delay(500);
+    //delay(500);
     lcd.clear();
   }
   else
@@ -71,7 +71,7 @@ if (sensorValue >= 700)
     lcd.setRGB(0, 200, 200);
     lcd.print("Heartrate: ");
     lcd.print(sensorPrintValue);
-    delay(500);
+    //delay(500);
     lcd.clear();
   }
 }
@@ -83,4 +83,3 @@ if (sensorValue >= 700)
   }
 
 }
-
