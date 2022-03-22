@@ -30,7 +30,7 @@ void setup() {
   Serial.print("stepper delay (micros): "); Serial.print(stepper.getDelay());
   Serial.println(); Serial.println();
 
-  stepper.newMoveTo(moveClockwise, 4096);
+  stepper.newMoveTo(moveClockwise, 2048);//4096
 
   moveStartTime = millis();
   
@@ -44,14 +44,36 @@ void loop() {
   Serial.print(sensorValue);
   Serial.println();
 
-if (sensorValue > 0)
-{
-
-  
-  if (sensorValue >= 700) 
+if (sensorValue >= 700) 
   {
     stepper.setRpm(16);
     stepper.run();
+  }
+  else if (sensorValue >= 500)
+  {
+    stepper.setRpm(10);
+    stepper.run();
+  } 
+  
+  else if (sensorValue >= 300)
+  {
+    stepper.setRpm(5);
+    stepper.run();
+  }
+  else 
+  {
+    stepper.stop();
+  }
+  //stepper.run();
+
+//if (sensorValue > 0)
+//{
+  //stepper.run();
+  
+  if (sensorValue >= 700) 
+  {
+    //stepper.setRpm(16);
+    //stepper.run();
     lcd.setRGB(255, 0, 0);
     lcd.print("Heartrate: ");
     lcd.print(sensorPrintValue);
@@ -60,8 +82,8 @@ if (sensorValue > 0)
   }
   else if (sensorValue >= 500 && sensorValue < 700)
   {
-    stepper.run();
-    stepper.setRpm(10);
+    //stepper.run();
+    //stepper.setRpm(10);
     lcd.setRGB(0, 255, 0);
     lcd.print("Heartrate: ");
     lcd.print(sensorPrintValue);
@@ -70,8 +92,8 @@ if (sensorValue > 0)
   }
   else if (sensorValue >= 300 && sensorValue < 500)
   {
-    stepper.setRpm(5);
-    stepper.run();
+    //stepper.setRpm(5);
+    //stepper.run();
     lcd.setRGB(0, 0, 255);
     lcd.print("Heartrate: ");
     lcd.print(sensorPrintValue);
@@ -80,19 +102,22 @@ if (sensorValue > 0)
   }
   else
   {
-    stepper.setRpm(1);
-    stepper.run();
+    //stepper.setRpm(1);
+    //stepper.run();
     lcd.setRGB(0, 200, 200);
     lcd.print("Heartrate: ");
     lcd.print(sensorPrintValue);
     delay(500);
     lcd.clear();
   }
-}
+//}
+/*
   else 
   {
     stepper.stop();
   }
+*/
+
   
   int stepsLeft = stepper.getStepsLeft();
 
@@ -109,8 +134,8 @@ if (sensorValue > 0)
     // let's start a new move in the reverse direction
     */
     //moveClockwise = !moveClockwise; // reverse direction
-    stepper.newMoveDegrees (moveClockwise, 360); // move 180 degrees from current position CHANGED DEGREES
-    moveStartTime = millis(); // reset move start time
+    //stepper.newMoveDegrees (moveClockwise, 360); // move 180 degrees from current position CHANGED DEGREES
+    //moveStartTime = millis(); // reset move start time
 
   }
   
