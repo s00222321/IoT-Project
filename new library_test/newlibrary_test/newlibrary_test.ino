@@ -24,56 +24,87 @@ void setup()
 
 void loop()  
 {
-  sensorValue = analogRead(sensorPin);
-  sensorPrintValue = sensorValue / 4.3;
-  Serial.print("sensor = ");
-  Serial.print(sensorValue);
-  Serial.println();
   
   Steps2Take  =  STEPS_PER_OUTPUT_REVOLUTION ;
   
 if (sensorValue > 0)
 {
+  
 if (sensorValue >= 700) 
   {
-    small_stepper.setSpeed(700);
-    small_stepper.step(Steps2Take);
-    lcd.setRGB(255, 0, 0);
-    lcd.print("Heartrate: ");
-    lcd.print(sensorPrintValue);
-    //delay(500);
-    lcd.clear();
+
+    small_stepper.setSpeed(1000);
+    small_stepper.step(-Steps2Take);
+   
   }
   else if (sensorValue >= 500 && sensorValue < 700)
   {
-    small_stepper.setSpeed(500);
-    small_stepper.step(Steps2Take);
-    lcd.setRGB(0, 255, 0);
-    lcd.print("Heartrate: ");
-    lcd.print(sensorPrintValue);
-    //delay(500);
-    lcd.clear();
+
+    small_stepper.setSpeed(700);
+    small_stepper.step(-Steps2Take);
+
   }
   else if (sensorValue >= 300 && sensorValue < 500)
   {
-    small_stepper.setSpeed(300);
-    small_stepper.step(Steps2Take);
-    lcd.setRGB(0, 0, 255);
-    lcd.print("Heartrate: ");
-    lcd.print(sensorPrintValue);
-    //delay(500);
-    lcd.clear();
+
+    small_stepper.setSpeed(500);
+    small_stepper.step(-Steps2Take);
+
   }
   else
   {
-    small_stepper.setSpeed(100);
-    small_stepper.step(Steps2Take);
+
+    small_stepper.setSpeed(300);
+    small_stepper.step(-Steps2Take);
+
+  }
+
+  if (sensorValue >= 700) 
+  {
+    lcd.setRGB(255, 0, 0);
+    lcd.print("Heartrate: ");
+    lcd.print(sensorPrintValue);
+    delay(1000);
+    lcd.clear();
+
+   
+  }
+  else if (sensorValue >= 500 && sensorValue < 700)
+  {
+    lcd.setRGB(0, 255, 0);
+    lcd.print("Heartrate: ");
+    lcd.print(sensorPrintValue);
+    delay(1000);
+    lcd.clear();
+
+
+  }
+  else if (sensorValue >= 300 && sensorValue < 500)
+  {
+    lcd.setRGB(0, 0, 255);
+    lcd.print("Heartrate: ");
+    lcd.print(sensorPrintValue);
+    delay(1000);
+    lcd.clear();
+
+
+  }
+  else
+  {
     lcd.setRGB(0, 200, 200);
     lcd.print("Heartrate: ");
     lcd.print(sensorPrintValue);
-    //delay(500);
+    delay(1000);
     lcd.clear();
+
+
   }
+
+    sensorValue = analogRead(sensorPin);
+  sensorPrintValue = sensorValue / 4.3;
+  Serial.print("sensor = ");
+  Serial.print(sensorValue);
+  Serial.println();
 }
 
   else 
