@@ -36,7 +36,7 @@ void loop()
 if (sensorValue >= 700) 
   {
 
-    small_stepper.setSpeed(1000);
+    small_stepper.setSpeed(400);
     small_stepper.step(-Steps2Take);
     sensorValue = analogRead(sensorPin);
     sensorPrintValue = sensorValue / 4.3;
@@ -49,7 +49,7 @@ if (sensorValue >= 700)
   else if (sensorValue >= 500 && sensorValue < 700)
   {
 
-    small_stepper.setSpeed(800);
+    small_stepper.setSpeed(600);
     small_stepper.step(-Steps2Take);
     sensorValue = analogRead(sensorPin);
     sensorPrintValue = sensorValue / 4.3;
@@ -62,7 +62,7 @@ if (sensorValue >= 700)
   else if (sensorValue >= 300 && sensorValue < 500)
   {
 
-    small_stepper.setSpeed(600);
+    small_stepper.setSpeed(800);
     small_stepper.step(-Steps2Take);
     sensorValue = analogRead(sensorPin);
     sensorPrintValue = sensorValue / 4.3;
@@ -73,7 +73,7 @@ if (sensorValue >= 700)
   else
   {
 
-    small_stepper.setSpeed(400);
+    small_stepper.setSpeed(1000);
     small_stepper.step(-Steps2Take);
     sensorValue = analogRead(sensorPin);
     sensorPrintValue = sensorValue / 4.3;
@@ -85,4 +85,3 @@ if (sensorValue >= 700)
   lcd.clear();
 
 }
-
